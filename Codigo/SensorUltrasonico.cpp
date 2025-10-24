@@ -1,19 +1,20 @@
 #include "SensorUltrasonico.h"
+#include "Config.h"
 
 void SensorUltrasonico::configurarPines() {
-  pinMode(PIN_TRIGGER, OUTPUT);
-  pinMode(PIN_ECHO, INPUT);
-  digitalWrite(PIN_TRIGGER, LOW);
+  CONFIGURAR_PIN_TRIGGER();
+  CONFIGURAR_PIN_ECHO();
+  TRIGGER_DESACTIVAR();
 }
 
 void SensorUltrasonico::iniciarTrigger(unsigned long ahora_us) {
-  digitalWrite(PIN_TRIGGER, HIGH);
+  TRIGGER_ACTIVAR();
   tInicioTrigger_us = ahora_us;
   estado = US_TRIGGER;
 }
 
 void SensorUltrasonico::finalizarTrigger() {
-  digitalWrite(PIN_TRIGGER, LOW);
+  TRIGGER_DESACTIVAR();
   estado = US_ESPERANDO_ALTO;
 }
 
@@ -31,26 +32,36 @@ void SensorUltrasonico::finalizarMedicion(unsigned long ahora_us, unsigned long 
 }
 
 void SensorUltrasonico::procesar() {
-  unsigned long ahora_ms = millis();
-  unsigned long ahora_us = micros();
+  unsigned long ahora_ms = TIEMPO_MS();
+  unsigned long ahora_us = TIEMPO_US();
 
   switch (estado) {
     case US_INACTIVO:
-      if (ahora_ms - ultimoDisparoUS_ms >= INTERVALO_US_MS) iniciarTrigger(ahora_us);
+      if (ahora_ms - ultimoDisparoUS_ms >= INTERVALO_US_MS)
+        iniciarTrigger(ahora_us);
       break;
+
     case US_TRIGGER:
-      if (ahora_us - tInicioTrigger_us >= DURACION_TRIGGER_US) finalizarTrigger();
+      if (ahora_us - tInicioTrigger_us >= DURACION_TRIGGER_US)
+        finalizarTrigger();
       break;
+
     case US_ESPERANDO_ALTO:
-      if (digitalRead(PIN_ECHO) == HIGH) iniciarMedicion(ahora_us);
+      if (ECHO_ES_ALTO())
+        iniciarMedicion(ahora_us);
       break;
+
     case US_MIDIENDO:
-      if (digitalRead(PIN_ECHO) == LOW) finalizarMedicion(ahora_us, ahora_ms);
+      if (ECHO_ES_BAJO())
+        finalizarMedicion(ahora_us, ahora_ms);
       break;
+
     case US_ESPERANDO_BAJO:
       estado = US_INACTIVO;
       break;
   }
 }
 
-long SensorUltrasonico::obtenerDistancia() { return distanciaCm; }
+long SensorUltrasonico::obtenerDistancia() { 
+  return distanciaCm; 
+}

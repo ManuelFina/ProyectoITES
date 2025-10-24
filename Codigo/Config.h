@@ -5,7 +5,7 @@
 #include <WiFi.h>
 #include <WebServer.h>
 #include <PubSubClient.h>
-#include <Servo.h>    
+#include <Servo.h>
 
 #define WIFI_SSID       "iPhone de Enzo"
 #define WIFI_PASS       "123456789"
@@ -23,16 +23,29 @@
 #define PIN_PWM2     26
 #define PIN_TRIGGER  27
 #define PIN_ECHO     13
-#define PIN_SERVO    14   
+#define PIN_SERVO    14
 
-#define PIN_ENCENDER(pin)      digitalWrite(pin, HIGH)
-#define PIN_APAGAR(pin)        digitalWrite(pin, LOW)
-#define PIN_LEER(pin)          digitalRead(pin)
+#define PIN_ENCENDER(pin)      digitalWrite((pin), HIGH)
+#define PIN_APAGAR(pin)        digitalWrite((pin), LOW)
+#define PIN_LEER(pin)          digitalRead((pin))
 
 #define CONFIGURAR_PIN_MOTOR1_A()   pinMode(PIN_MOTOR1_A, OUTPUT)
 #define CONFIGURAR_PIN_MOTOR1_B()   pinMode(PIN_MOTOR1_B, OUTPUT)
 #define CONFIGURAR_PIN_MOTOR2_A()   pinMode(PIN_MOTOR2_A, OUTPUT)
 #define CONFIGURAR_PIN_MOTOR2_B()   pinMode(PIN_MOTOR2_B, OUTPUT)
+
+#define PIN_CONFIGURAR_SALIDA(pin)  pinMode((pin), OUTPUT)
+#define PIN_CONFIGURAR_ENTRADA(pin) pinMode((pin), INPUT)
+
+#define CONFIGURAR_PIN_TRIGGER()    PIN_CONFIGURAR_SALIDA(PIN_TRIGGER)
+#define CONFIGURAR_PIN_ECHO()       PIN_CONFIGURAR_ENTRADA(PIN_ECHO)
+#define TRIGGER_ACTIVAR()           PIN_ENCENDER(PIN_TRIGGER)
+#define TRIGGER_DESACTIVAR()        PIN_APAGAR(PIN_TRIGGER)
+#define ECHO_ES_ALTO()              (PIN_LEER(PIN_ECHO) == HIGH)
+#define ECHO_ES_BAJO()              (PIN_LEER(PIN_ECHO) == LOW)
+
+#define TIEMPO_MS()                 millis()
+#define TIEMPO_US()                 micros()
 
 #define PWM_FREQ 2000
 #define PWM_RES  8
@@ -42,6 +55,7 @@
 #define PWM_SPEED_MODE LEDC_LOW_SPEED_MODE
 #define PWM_TIMER LEDC_TIMER_0
 #define PWM_CLK_CFG LEDC_AUTO_CLK
+#define PWM_WRITE(canal, duty)      ledcWrite((canal), (duty))
 
 #define SERVO_ANGULO_MIN 0
 #define SERVO_ANGULO_MAX 180
@@ -51,9 +65,5 @@
 #define INTERVALO_US_MS 100
 #define DURACION_TRIGGER_US 10
 #define US_VELOCIDAD_SONIDO 0.0343f
-
-#define MOTOR_HIGH(pin) digitalWrite(pin, HIGH)
-#define MOTOR_LOW(pin)  digitalWrite(pin, LOW)
-#define PWM_WRITE(canal, duty) ledcWrite(canal, duty) 
 
 #endif
