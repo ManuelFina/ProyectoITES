@@ -7,7 +7,7 @@
 #include "ClienteMQTT.h"
 #include "ConexionWiFi.h"
 #include "ServidorWeb.h"
-#include "ConfiguradorPWM.h"
+//#include "ConfiguradorPWM.h"
 
 void setup() {
   controlMotores.configurarPines();
@@ -15,7 +15,7 @@ void setup() {
   configPWM.configurar();
   controlServo.configurar();
   controlMotores.detener();
-
+  
   conexionWiFi.conectar();
   clienteMQTT.configurar();
   servidorWeb.configurar();}
