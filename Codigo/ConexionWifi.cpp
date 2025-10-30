@@ -1,7 +1,6 @@
 #include "ConexionWiFi.h"
 
-//refactorizar funcion
-void ConexionWiFi::conectar() {
+void ConectarWiFi() {
   Serial.begin(115200);
   WiFi.mode(WIFI_STA);
   WiFi.begin(WIFI_SSID, WIFI_PASS);

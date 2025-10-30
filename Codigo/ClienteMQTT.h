@@ -2,9 +2,7 @@
 #include "Config.h"
 #include "globals.h"
 
-  void ConfigurarclienteMQTT();
-  void ActualizarclienteMQTT();
-  void reconectar();
-  void enviarMedicion();
-  ConfigurarclienteMQTT();
-  ConfigurarservidorWeb();
+  void ConfigurarClienteMQTT();
+  void ActualizarClienteMQTT();
+  void ReconectarMQTT();
+  void EnviarMedicionMQTT();

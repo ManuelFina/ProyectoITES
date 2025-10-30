@@ -2,5 +2,6 @@
 #include "Config.h"
 #include "globals.h"
 
-  void ConectarWifi();
+  void ConectarWiFi();
+
 

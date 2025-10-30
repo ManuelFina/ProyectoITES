@@ -1,8 +1,8 @@
-#include "config.h"
-#include "globals.h"
+#include "Config.h"
+#include "Globals.h"
 
 #include "CtrlTanque.h"
-#include "ControlServo.h"
+#include "CtrlServo.h"
 #include "SensorUltrasonico.h"
 #include "ClienteMQTT.h"
 #include "ConexionWiFi.h"
@@ -11,23 +11,22 @@
 void setup() {
   CONFIG_MOTOR_UNO
   CONFIG_MOTOR_DOS
-  
-  //sensorUltrasonico.configurarPines();
-  controlServo.configurar();
 
-  conexionWiFi.conectar();
-  ConfigurarclienteMQTT();
-  ConfigurarservidorWeb();
+  CONFIG_SERVO
+
+  CONFIG_SENSOR_ULTRASONICO
+
+  ConectarWiFi();
+  ConfigurarClienteMQTT();
+  ConfigurarServidorWeb();
   ultimoMovimientoServo = millis();
 }
 
 void loop() {
-  ActualizarclienteMQTT();
-  ActualizarservidorWeb();
-  /**/
-  controlServo.actualizar();
-  sensorUltrasonico.procesar();
-  ControlMotores.actualizar();
-  
-  if (sensorUltrasonico.obtenerDistancia() >= 0) clienteMQTT.enviarMedicion();
+  ActualizarClienteMQTT();
+  ActualizarServidorWeb();
+  ActualizarControlServo();
+  ProcesarSensorUltrasonico();
+  //DistanciaSensorUltrasonico almacenar este valor en una variable global asi no se llama a la funcion
+  if (DistanciaSensorUltrasonico() >= 0) EnviarMedicionMQTT();
 }

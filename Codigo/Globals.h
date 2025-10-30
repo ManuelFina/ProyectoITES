@@ -12,6 +12,7 @@ extern int           direccionServo;
 extern unsigned long ultimoMovimientoServo;
 extern long          distanciaCm;
 
+//esto no va 
 class ControlMotores;
 class ControlServo;
 class SensorUltrasonico;

@@ -1,6 +1,6 @@
 #include "ClienteMQTT.h"
 
-void ConfigurarclienteMQTT(); {
+void ConfigurarClienteMQTT(); {
   brokerMQTT.setServer(MQTT_BROKER, MQTT_PORT);
   ReconectarMQTT();
 }
@@ -13,12 +13,12 @@ void ReconectarMQTT() {
   }
 }
 
-void ActualizarclienteMQTT() {
+void ActualizarClienteMQTT() {
   if (!brokerMQTT.connected()) ReconectarMQTT();
   brokerMQTT.loop();
 }
 
-void ClienteMQTT::enviarMedicion() {
+void EnviarMedicionMQTT() {
   if (!brokerMQTT.connected() || distanciaCm < 0) return;
 
   String payload = "{";
