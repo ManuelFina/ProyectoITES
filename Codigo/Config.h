@@ -7,10 +7,10 @@
 #include <PubSubClient.h>
 #include <Servo.h>
 
-#define WIFI_SSID       "iPhone de Enzo"
-#define WIFI_PASS       "123456789"
+#define WIFI_SSID       ""
+#define WIFI_PASS       ""
 
-#define MQTT_BROKER     "192.168.1.100"
+#define MQTT_BROKER     "Ip Fija"
 #define MQTT_PORT       1883
 #define MQTT_CLIENT_ID  "esp32_tanque_01"
 #define MQTT_TOPIC_MEDICIONES "/tank/esp32_01/measurements"
@@ -29,6 +29,13 @@
 #define ROTAR_IZQUIERDA {digitalWrite(PIN_MOTOR1_A, LOW);  digitalWrite(PIN_MOTOR1_B, HIGH); digitalWrite(PIN_MOTOR2_A, HIGH); digitalWrite(PIN_MOTOR2_B, LOW)}
 #define DETENER_MOTORES {digitalWrite(PIN_MOTOR1_A, LOW);  digitalWrite(PIN_MOTOR1_B, LOW);  digitalWrite(PIN_MOTOR2_A, LOW);  digitalWrite(PIN_MOTOR2_B, LOW)}
 
+#define PIN_SERVO    14
+
+#define SERVO_ANGULO_MIN 0
+#define SERVO_ANGULO_MAX 180
+#define SERVO_PASO 5
+#define INTERVALO_SERVO_MS 50
+
 #define PIN_TRIGGER  27
 #define PIN_ECHO     13
 
@@ -41,13 +48,6 @@
 
 #define TIEMPO_MS()                 millis()
 #define TIEMPO_US()                 micros()
-
-#define PIN_SERVO    14
-
-#define SERVO_ANGULO_MIN 0
-#define SERVO_ANGULO_MAX 180
-#define SERVO_PASO 5
-#define INTERVALO_SERVO_MS 50
 
 #define INTERVALO_US_MS 100
 #define DURACION_TRIGGER_US 10

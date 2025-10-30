@@ -12,15 +12,6 @@ extern int           direccionServo;
 extern unsigned long ultimoMovimientoServo;
 extern long          distanciaCm;
 
-//esto no va 
-class ControlMotores;
-class ControlServo;
-class SensorUltrasonico;
-class ClienteMQTT;
-class ConexionWiFi;
-class ServidorWeb;
-class ConfiguradorPWM;
-
 // === Instancias globales ===
 extern ControlMotores     controlMotores;
 extern ControlServo       controlServo;
@@ -28,4 +19,3 @@ extern SensorUltrasonico  sensorUltrasonico;
 extern ClienteMQTT        clienteMQTT;
 extern ConexionWiFi       conexionWiFi;
 extern ServidorWeb        servidorWeb;
-extern ConfiguradorPWM    configPWM;

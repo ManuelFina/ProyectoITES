@@ -12,7 +12,6 @@ WiFiClient   clienteWiFi;
 PubSubClient brokerMQTT(clienteWiFi);
 WebServer    servidorHTTP(80);
 
-int           velocidadBase = 200;
 int           anguloServo = 90;
 int           direccionServo = 1;
 unsigned long ultimoMovimientoServo = 0;
