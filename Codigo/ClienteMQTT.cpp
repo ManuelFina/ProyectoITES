@@ -1,11 +1,11 @@
 #include "ClienteMQTT.h"
 
-void ClienteMQTT::configurar() {
+void ConfigurarclienteMQTT(); {
   brokerMQTT.setServer(MQTT_BROKER, MQTT_PORT);
-  reconectar();
+  ReconectarMQTT();
 }
 
-void ClienteMQTT::reconectar() {
+void ReconectarMQTT() {
   while (!brokerMQTT.connected()) {
     if (brokerMQTT.connect(MQTT_CLIENT_ID)) break;
     brokerMQTT.loop();
@@ -13,8 +13,8 @@ void ClienteMQTT::reconectar() {
   }
 }
 
-void ClienteMQTT::actualizar() {
-  if (!brokerMQTT.connected()) reconectar();
+void ActualizarclienteMQTT() {
+  if (!brokerMQTT.connected()) ReconectarMQTT();
   brokerMQTT.loop();
 }
 

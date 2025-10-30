@@ -1,7 +1,7 @@
 #include "ServidorWeb.h"
 #include "ControlMotores.h"
 
-void ServidorWeb::configurar() {
+void ConfigurarservidorWeb() {
   servidorHTTP.on("/", manejadorRaiz);
   servidorHTTP.on("/adelante", manejadorAdelante);
   servidorHTTP.on("/atras", manejadorAtras);
@@ -11,40 +11,15 @@ void ServidorWeb::configurar() {
   servidorHTTP.begin();
 }
 
-void ServidorWeb::actualizar() {
+void ActualizarservidorWeb() {
   servidorHTTP.handleClient();
 }
 
-void ServidorWeb::manejadorRaiz() {
+void manejadorRaiz() {
   servidorHTTP.send(200, "text/html", generarHTML());
 }
 
-void ServidorWeb::manejadorAdelante() {
-  controlMotores.adelante();
-  servidorHTTP.send(200, "text/plain", "OK");
-}
-
-void ServidorWeb::manejadorAtras() {
-  controlMotores.atras();
-  servidorHTTP.send(200, "text/plain", "OK");
-}
-
-void ServidorWeb::manejadorIzquierda() {
-  controlMotores.izquierda();
-  servidorHTTP.send(200, "text/plain", "OK");
-}
-
-void ServidorWeb::manejadorDerecha() {
-  controlMotores.derecha();
-  servidorHTTP.send(200, "text/plain", "OK");
-}
-
-void ServidorWeb::manejadorParar() {
-  controlMotores.detener();
-  servidorHTTP.send(200, "text/plain", "OK");
-}
-
-String ServidorWeb::generarHTML() {
+String generarHTML() {
   return
     "<!doctype html><html><head><meta name='viewport' content='width=device-width,initial-scale=1'>"
     "<style>body{font-family:Arial;background:#0b1220;color:#fff;text-align:center;padding:10px}"

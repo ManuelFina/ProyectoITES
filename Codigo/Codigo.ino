@@ -1,32 +1,33 @@
 #include "config.h"
 #include "globals.h"
 
-#include "ControlMotores.h"
+#include "CtrlTanque.h"
 #include "ControlServo.h"
 #include "SensorUltrasonico.h"
 #include "ClienteMQTT.h"
 #include "ConexionWiFi.h"
 #include "ServidorWeb.h"
-//#include "ConfiguradorPWM.h"
 
 void setup() {
-  controlMotores.configurarPines();
-  sensorUltrasonico.configurarPines();
-  configPWM.configurar();
-  controlServo.configurar();
-  controlMotores.detener();
+  CONFIG_MOTOR_UNO
+  CONFIG_MOTOR_DOS
   
+  //sensorUltrasonico.configurarPines();
+  controlServo.configurar();
+
   conexionWiFi.conectar();
-  clienteMQTT.configurar();
-  servidorWeb.configurar();}
+  ConfigurarclienteMQTT();
+  ConfigurarservidorWeb();
   ultimoMovimientoServo = millis();
 }
 
 void loop() {
-  clienteMQTT.actualizar();
-  servidorWeb.actualizar();
+  ActualizarclienteMQTT();
+  ActualizarservidorWeb();
+  /**/
   controlServo.actualizar();
   sensorUltrasonico.procesar();
-
+  ControlMotores.actualizar();
+  
   if (sensorUltrasonico.obtenerDistancia() >= 0) clienteMQTT.enviarMedicion();
 }

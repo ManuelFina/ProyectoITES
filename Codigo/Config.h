@@ -19,23 +19,18 @@
 #define PIN_MOTOR1_B 17
 #define PIN_MOTOR2_A 18
 #define PIN_MOTOR2_B 19
-#define PIN_PWM1     25
-#define PIN_PWM2     26
+
+#define CONFIG_MOTOR_UNO  {pinMode(PIN_MOTOR1_A, OUTPUT); pinMode(PIN_MOTOR1_B, OUTPUT)}
+#define CONFIG_MOTOR_DOS  {pinMode(PIN_MOTOR2_A, OUTPUT); pinMode(PIN_MOTOR2_B, OUTPUT)}
+
+#define AVANZAR         {digitalWrite(PIN_MOTOR1_A, HIGH); digitalWrite(PIN_MOTOR1_B, LOW);  digitalWrite(PIN_MOTOR2_A, HIGH); digitalWrite(PIN_MOTOR2_B, LOW)}
+#define RETROCEDER      {digitalWrite(PIN_MOTOR1_A, LOW);  digitalWrite(PIN_MOTOR1_B, HIGH); digitalWrite(PIN_MOTOR2_A, LOW);  digitalWrite(PIN_MOTOR2_B, HIGH)}
+#define ROTAR_DERECHA   {digitalWrite(PIN_MOTOR1_A, HIGH); digitalWrite(PIN_MOTOR1_B, LOW);  digitalWrite(PIN_MOTOR2_A, LOW);  digitalWrite(PIN_MOTOR2_B, HIGH)}
+#define ROTAR_IZQUIERDA {digitalWrite(PIN_MOTOR1_A, LOW);  digitalWrite(PIN_MOTOR1_B, HIGH); digitalWrite(PIN_MOTOR2_A, HIGH); digitalWrite(PIN_MOTOR2_B, LOW)}
+#define DETENER_MOTORES {digitalWrite(PIN_MOTOR1_A, LOW);  digitalWrite(PIN_MOTOR1_B, LOW);  digitalWrite(PIN_MOTOR2_A, LOW);  digitalWrite(PIN_MOTOR2_B, LOW)}
+
 #define PIN_TRIGGER  27
 #define PIN_ECHO     13
-#define PIN_SERVO    14
-
-#define PIN_ENCENDER(pin)      digitalWrite((pin), HIGH)
-#define PIN_APAGAR(pin)        digitalWrite((pin), LOW)
-#define PIN_LEER(pin)          digitalRead((pin))
-
-#define CONFIGURAR_PIN_MOTOR1_A()   pinMode(PIN_MOTOR1_A, OUTPUT)
-#define CONFIGURAR_PIN_MOTOR1_B()   pinMode(PIN_MOTOR1_B, OUTPUT)
-#define CONFIGURAR_PIN_MOTOR2_A()   pinMode(PIN_MOTOR2_A, OUTPUT)
-#define CONFIGURAR_PIN_MOTOR2_B()   pinMode(PIN_MOTOR2_B, OUTPUT)
-
-#define PIN_CONFIGURAR_SALIDA(pin)  pinMode((pin), OUTPUT)
-#define PIN_CONFIGURAR_ENTRADA(pin) pinMode((pin), INPUT)
 
 #define CONFIGURAR_PIN_TRIGGER()    PIN_CONFIGURAR_SALIDA(PIN_TRIGGER)
 #define CONFIGURAR_PIN_ECHO()       PIN_CONFIGURAR_ENTRADA(PIN_ECHO)
@@ -47,15 +42,7 @@
 #define TIEMPO_MS()                 millis()
 #define TIEMPO_US()                 micros()
 
-#define PWM_FREQ 2000
-#define PWM_RES  8
-#define PWM_RESOLUTION (ledc_timer_bit_t)PWM_RES
-#define CANAL_PWM1 0
-#define CANAL_PWM2 1
-#define PWM_SPEED_MODE LEDC_LOW_SPEED_MODE
-#define PWM_TIMER LEDC_TIMER_0
-#define PWM_CLK_CFG LEDC_AUTO_CLK
-#define PWM_WRITE(canal, duty)      ledcWrite((canal), (duty))
+#define PIN_SERVO    14
 
 #define SERVO_ANGULO_MIN 0
 #define SERVO_ANGULO_MAX 180
