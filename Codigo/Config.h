@@ -7,12 +7,11 @@
 #include <PubSubClient.h>
 #include <Servo.h>
 
-#define WIFI_SSID       ""
-#define WIFI_PASS       ""
-
-#define MQTT_BROKER     "Ip Fija"
-#define MQTT_PORT       1883
-#define MQTT_CLIENT_ID  "esp32_tanque_01"
+#define WIFI_SSID "Tanque_WIFI" 
+#define WIFI_PASS "tanque12345" 
+#define MQTT_BROKER "192.168.50.10" 
+#define MQTT_PORT 1883 
+#define MQTT_CLIENT_ID "esp32_tanque_01" 
 #define MQTT_TOPIC_MEDICIONES "/tank/esp32_01/measurements"
 
 #define PIN_MOTOR1_A 16
@@ -20,8 +19,13 @@
 #define PIN_MOTOR2_A 18
 #define PIN_MOTOR2_B 19
 
-#define CONFIG_MOTOR_UNO  {pinMode(PIN_MOTOR1_A, OUTPUT); pinMode(PIN_MOTOR1_B, OUTPUT)}
-#define CONFIG_MOTOR_DOS  {pinMode(PIN_MOTOR2_A, OUTPUT); pinMode(PIN_MOTOR2_B, OUTPUT)}
+#define ESTADO_PARADO     0
+#define ESTADO_AVANZAR    1
+#define ESTADO_RETROCEDER 2
+#define ESTADO_IZQUIERDA  3
+#define ESTADO_DERECHA    4
+
+#define CONFIG_MOTORES  {pinMode(PIN_MOTOR1_A, OUTPUT); pinMode(PIN_MOTOR1_B, OUTPUT); pinMode(PIN_MOTOR2_A, OUTPUT); pinMode(PIN_MOTOR2_B, OUTPUT)}
 
 #define AVANZAR         {digitalWrite(PIN_MOTOR1_A, HIGH); digitalWrite(PIN_MOTOR1_B, LOW);  digitalWrite(PIN_MOTOR2_A, HIGH); digitalWrite(PIN_MOTOR2_B, LOW)}
 #define RETROCEDER      {digitalWrite(PIN_MOTOR1_A, LOW);  digitalWrite(PIN_MOTOR1_B, HIGH); digitalWrite(PIN_MOTOR2_A, LOW);  digitalWrite(PIN_MOTOR2_B, HIGH)}
@@ -29,28 +33,25 @@
 #define ROTAR_IZQUIERDA {digitalWrite(PIN_MOTOR1_A, LOW);  digitalWrite(PIN_MOTOR1_B, HIGH); digitalWrite(PIN_MOTOR2_A, HIGH); digitalWrite(PIN_MOTOR2_B, LOW)}
 #define DETENER_MOTORES {digitalWrite(PIN_MOTOR1_A, LOW);  digitalWrite(PIN_MOTOR1_B, LOW);  digitalWrite(PIN_MOTOR2_A, LOW);  digitalWrite(PIN_MOTOR2_B, LOW)}
 
-#define PIN_SERVO    14
-
-#define SERVO_ANGULO_MIN 0
-#define SERVO_ANGULO_MAX 180
-#define SERVO_PASO 5
-#define INTERVALO_SERVO_MS 50
+#define CONFIG_SERVO {miServo.attach(14); miServo.write(angulo)}
 
 #define PIN_TRIGGER  27
 #define PIN_ECHO     13
 
-#define CONFIGURAR_PIN_TRIGGER()    PIN_CONFIGURAR_SALIDA(PIN_TRIGGER)
-#define CONFIGURAR_PIN_ECHO()       PIN_CONFIGURAR_ENTRADA(PIN_ECHO)
-#define TRIGGER_ACTIVAR()           PIN_ENCENDER(PIN_TRIGGER)
-#define TRIGGER_DESACTIVAR()        PIN_APAGAR(PIN_TRIGGER)
-#define ECHO_ES_ALTO()              (PIN_LEER(PIN_ECHO) == HIGH)
-#define ECHO_ES_BAJO()              (PIN_LEER(PIN_ECHO) == LOW)
+// esto no son funciones osea sacar()
+#define CONFIGURAR_PIN_TRIGGER()    pinMode(PIN_TRIGGER, OUTPUT)
+#define CONFIGURAR_PIN_ECHO()       pinMode(PIN_ECHO, INPUT)
+
+#define TRIGGER_ACTIVAR()           digitalWrite(PIN_TRIGGER, HIGH)
+#define TRIGGER_DESACTIVAR()        digitalWrite(PIN_TRIGGER, LOW)
+#define ECHO_ES_ALTO()              (digitalRead(PIN_ECHO) == HIGH)
+#define ECHO_ES_BAJO()              (digitalRead(PIN_ECHO) == LOW)
 
 #define TIEMPO_MS()                 millis()
 #define TIEMPO_US()                 micros()
 
-#define INTERVALO_US_MS 100
-#define DURACION_TRIGGER_US 10
-#define US_VELOCIDAD_SONIDO 0.0343f
+#define INTERVALO_US_MS             
+#define DURACION_TRIGGER_US        
+#define US_VELOCIDAD_SONIDO         
 
 #endif

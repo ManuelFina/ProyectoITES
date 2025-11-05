@@ -16,6 +16,8 @@ int           anguloServo = 90;
 int           direccionServo = 1;
 unsigned long ultimoMovimientoServo = 0;
 long          distanciaCm = -1;
+volatile int  Movimiento;
+
 
 ControlMotores     controlMotores;
 ControlServo       controlServo;

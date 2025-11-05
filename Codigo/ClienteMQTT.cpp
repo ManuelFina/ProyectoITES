@@ -22,9 +22,11 @@ void EnviarMedicionMQTT() {
   if (!brokerMQTT.connected() || distanciaCm < 0) return;
 
   String payload = "{";
-  payload += "\"distancia\":" + String(distanciaCm);
-  payload += ",\"angulo\":" + String(anguloServo);
-  payload += ",\"ts\":" + String(millis());
+  payload += "\"device_id\":\"" + String(DEVICE_ID) + "\"";
+  payload += ",\"distance_cm\":" + String(distanciaCm, 2);   
+  payload += ",\"angle_deg\":" + String(anguloServo, 2);
+  payload += ",\"raw_us\":" + String(raw_us);               
+  payload += ",\"correlation_id\":\"sim-" + String(millis()) + "\"";
   payload += "}";
 
   brokerMQTT.publish(MQTT_TOPIC_MEDICIONES, payload.c_str());

@@ -11,6 +11,7 @@ extern int           anguloServo;
 extern int           direccionServo;
 extern unsigned long ultimoMovimientoServo;
 extern long          distanciaCm;
+extern volatile int  Movimiento;
 
 // === Instancias globales ===
 extern ControlMotores     controlMotores;

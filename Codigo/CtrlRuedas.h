@@ -3,7 +3,6 @@
 
 #include "Config.h"
 
-//cambiar los nombres 
 void ComandoAdelante();
 void ComandoAtras();
 void manejadorIzquierda();

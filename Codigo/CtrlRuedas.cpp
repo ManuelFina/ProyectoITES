@@ -1,5 +1,6 @@
 #include "CtrlTanque.h"
 
+//hacer un fsm de esto 
 void ComandoAdelante() {
   AVANZAR;
   servidorHTTP.send(200, "text/plain", "OK");

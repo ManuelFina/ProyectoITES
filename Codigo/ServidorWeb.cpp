@@ -1,6 +1,8 @@
 #include "ServidorWeb.h"
 #include "ControlMotores.h"
 
+//acoplar esto a la fsm
+
 void ConfigurarservidorWeb() {
   servidorHTTP.on("/", manejadorRaiz);
   servidorHTTP.on("/adelante", manejadorAdelante);
