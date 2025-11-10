@@ -19,12 +19,6 @@
 #define PIN_MOTOR2_A 18
 #define PIN_MOTOR2_B 19
 
-#define ESTADO_PARADO     0
-#define ESTADO_AVANZAR    1
-#define ESTADO_RETROCEDER 2
-#define ESTADO_IZQUIERDA  3
-#define ESTADO_DERECHA    4
-
 #define CONFIG_MOTORES  {pinMode(PIN_MOTOR1_A, OUTPUT); pinMode(PIN_MOTOR1_B, OUTPUT); pinMode(PIN_MOTOR2_A, OUTPUT); pinMode(PIN_MOTOR2_B, OUTPUT)}
 
 #define AVANZAR         {digitalWrite(PIN_MOTOR1_A, HIGH); digitalWrite(PIN_MOTOR1_B, LOW);  digitalWrite(PIN_MOTOR2_A, HIGH); digitalWrite(PIN_MOTOR2_B, LOW)}
@@ -33,25 +27,21 @@
 #define ROTAR_IZQUIERDA {digitalWrite(PIN_MOTOR1_A, LOW);  digitalWrite(PIN_MOTOR1_B, HIGH); digitalWrite(PIN_MOTOR2_A, HIGH); digitalWrite(PIN_MOTOR2_B, LOW)}
 #define DETENER_MOTORES {digitalWrite(PIN_MOTOR1_A, LOW);  digitalWrite(PIN_MOTOR1_B, LOW);  digitalWrite(PIN_MOTOR2_A, LOW);  digitalWrite(PIN_MOTOR2_B, LOW)}
 
-#define CONFIG_SERVO {miServo.attach(14); miServo.write(angulo)}
+#define PIN_SERVO      9
 
-#define PIN_TRIGGER  27
-#define PIN_ECHO     13
+#define CONFIG_SERVO   {miServo.attach(14); miServo.write(angulo)}
 
-// esto no son funciones osea sacar()
-#define CONFIGURAR_PIN_TRIGGER()    pinMode(PIN_TRIGGER, OUTPUT)
-#define CONFIGURAR_PIN_ECHO()       pinMode(PIN_ECHO, INPUT)
+#define PIN_TRIG       7
+#define PIN_ECHO       6
+#define TIEMPO_ESCANEO 20 
 
-#define TRIGGER_ACTIVAR()           digitalWrite(PIN_TRIGGER, HIGH)
-#define TRIGGER_DESACTIVAR()        digitalWrite(PIN_TRIGGER, LOW)
-#define ECHO_ES_ALTO()              (digitalRead(PIN_ECHO) == HIGH)
-#define ECHO_ES_BAJO()              (digitalRead(PIN_ECHO) == LOW)
+#define CONFIG_ULTRASONICO  {pinMode(PIN_TRIG, OUTPUT); pinMode(PIN_ECHO, INPUT)}
 
-#define TIEMPO_MS()                 millis()
-#define TIEMPO_US()                 micros()
+#define TRIG_ON        digitalWrite(PIN_TRIG, HIGH)
+#define TRIG_OFF       digitalWrite(PIN_TRIG, LOW)
 
-#define INTERVALO_US_MS             
-#define DURACION_TRIGGER_US        
-#define US_VELOCIDAD_SONIDO         
+#define ECO_ES_ALTO    digitalRead(PIN_ECHO) == HIGH)
+#define ECO_ES_BAJO    digitalRead(PIN_ECHO) == LOW)
+
 
 #endif

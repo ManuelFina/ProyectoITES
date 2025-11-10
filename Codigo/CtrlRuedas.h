@@ -1,12 +1,7 @@
-#ifndef CTRLTANQUE_H
-#define CTRLTANQUE_H
+#ifndef CTRLRUEDAS_H
+#define CTRLRUEDAS_H
 
 #include "Config.h"
-
-void ComandoAdelante();
-void ComandoAtras();
-void manejadorIzquierda();
-void manejadorDerecha();
-void manejadorParar();
-
+enum Movimiento { PARADO, ADELANTE, ATRAS, IZQ, DER };
+void MovimientoTanque();
 #endif

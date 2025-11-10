@@ -1,27 +1,13 @@
-#include "CtrlTanque.h"
+#include "CtrlRuedas.h"
+#include "globals.h"
 
-//hacer un fsm de esto 
-void ComandoAdelante() {
-  AVANZAR;
-  servidorHTTP.send(200, "text/plain", "OK");
+void MovimientoTanque(){
+ switch (movimientoActual) {
+    case ADELANTE:    AVANZAR;         break;
+    case ATRAS:       RETROCEDER;      break;
+    case IZQ:         ROTAR_IZQUIERDA; break;
+    case DER:         ROTAR_DERECHA;   break;
+    case PARADO: 
+    default :         DETENER_MOTORES; break;
 }
 
-void ComandoAtras() {
-  RETROCEDER;
-  servidorHTTP.send(200, "text/plain", "OK");
-}
-
-void manejadorIzquierda() {
-  controlMotores.izquierda();
-  servidorHTTP.send(200, "text/plain", "OK");
-}
-
-void manejadorDerecha() {
-  controlMotores.derecha();
-  servidorHTTP.send(200, "text/plain", "OK");
-}
-
-void manejadorParar() {
-  controlMotores.detener();
-  servidorHTTP.send(200, "text/plain", "OK");
-}

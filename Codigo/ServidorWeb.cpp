@@ -1,17 +1,36 @@
 #include "ServidorWeb.h"
-#include "ControlMotores.h"
-
-//acoplar esto a la fsm
+#include "CtrlRuedas.h"
 
 void ConfigurarservidorWeb() {
-  servidorHTTP.on("/", manejadorRaiz);
-  servidorHTTP.on("/adelante", manejadorAdelante);
-  servidorHTTP.on("/atras", manejadorAtras);
-  servidorHTTP.on("/izquierda", manejadorIzquierda);
-  servidorHTTP.on("/derecha", manejadorDerecha);
-  servidorHTTP.on("/parar", manejadorParar);
+
+  servidorHTTP.on("/adelante", [](){
+    movimientoActual = ADELANTE;
+    servidorHTTP.send(200, "text/plain", "OK");
+  });
+
+  servidorHTTP.on("/atras", [](){
+    movimientoActual = ATRAS;
+    servidorHTTP.send(200, "text/plain", "OK");
+  });
+
+  servidorHTTP.on("/izquierda", [](){
+    movimientoActual = IZQ;
+    servidorHTTP.send(200, "text/plain", "OK");
+  });
+
+  servidorHTTP.on("/derecha", [](){
+    movimientoActual = DER;
+    servidorHTTP.send(200, "text/plain", "OK");
+  });
+
+  servidorHTTP.on("/parar", [](){
+    movimientoActual = PARADO;
+    servidorHTTP.send(200, "text/plain", "OK");
+  });
+
   servidorHTTP.begin();
 }
+
 
 void ActualizarservidorWeb() {
   servidorHTTP.handleClient();

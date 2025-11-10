@@ -11,7 +11,7 @@
 void setup() {
   CONFIG_MOTORES
   CONFIG_SERVO
-  CONFIG_SENSOR_ULTRASONICO
+  CONFIG_ULTRASONICO
 
   ConectarWiFi();
   ConfigurarClienteMQTT();
@@ -23,6 +23,7 @@ void loop() {
   ActualizarServidorWeb();
   MovimientoServo();
   ProcesarSensorUltrasonico();
-  //DistanciaSensorUltrasonico almacenar este valor en una variable global asi no se llama a la funcion
+  MovimientoTanque();
+
   if (DistanciaSensorUltrasonico() >= 0) EnviarMedicionMQTT();
 }
