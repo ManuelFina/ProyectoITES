@@ -1,87 +1,46 @@
-#include <Servo.h>
+// Pines de control
+#define IN1 16
+#define IN2 17
+#define IN3 18
+#define IN4 19
+#define ENA 33
+#define ENB 34
 
-// === CONFIGURACIÓN DE PINES ===
-#define PIN_TRIG 7
-#define PIN_ECHO 6
-#define PIN_SERVO 9
-
-// === CONFIGURACIÓN DE TIEMPOS ===
-#define TIEMPO_ESCANEO 20     // tiempo entre pasos del servo en milisegundos
-#define ANGULO_MIN 0          // límite inferior del barrido
-#define ANGULO_MAX 180        // límite superior del barrido
-
-// === VARIABLES GLOBALES ===
-Servo servoRadar;
-bool direccionDerecha = true;
-int anguloActual = 0;
-unsigned long tiempoAnteriorServo = 0;
-unsigned long tiempoAnteriorLectura = 0;
-const unsigned long INTERVALO_LECTURA = 1500; // tiempo entre mediciones
-
-// === FUNCIONES AUXILIARES ===
-
-// Medir distancia en cm usando el sensor ultrasónico
-long medirDistancia() {
-  digitalWrite(PIN_TRIG, LOW);
-  delayMicroseconds(2);
-  digitalWrite(PIN_TRIG, HIGH);
-  delayMicroseconds(10);
-  digitalWrite(PIN_TRIG, LOW);
-  long duracion = pulseIn(PIN_ECHO, HIGH, 30000); // timeout de 30 ms (~5m máx)
-  long distancia = duracion * 0.034 / 2; // convertir a cm
-  return distancia;
-}
-
-// Mover el servo de manera no bloqueante
-void moverServo() {
-  unsigned long tiempoActual = millis();
-  if (tiempoActual - tiempoAnteriorServo >= TIEMPO_ESCANEO) {
-    tiempoAnteriorServo = tiempoActual;
-
-    // Actualizar ángulo según dirección
-    if (direccionDerecha) anguloActual++;
-    else anguloActual--;
-
-    // Cambiar dirección al llegar a los extremos
-    if (anguloActual >= ANGULO_MAX) direccionDerecha = false;
-    else if (anguloActual <= ANGULO_MIN) direccionDerecha = true;
-
-    // Mover el servo
-    servoRadar.write(anguloActual);
-  }
-}
-
-// Mostrar datos de distancia y ángulo por Serial
-void mostrarRadar() {
-  unsigned long tiempoActual = millis();
-  if (tiempoActual - tiempoAnteriorLectura >= INTERVALO_LECTURA) {
-    tiempoAnteriorLectura = tiempoActual;
-    long distancia = medirDistancia();
-
-    Serial.print("Ángulo: ");
-    Serial.print(anguloActual);
-    Serial.print("° | Distancia: ");
-    if (distancia == 0) Serial.println("Fuera de rango");
-    else {
-      Serial.print(distancia);
-      Serial.println(" cm");
-    }
-  }
-}
-
-// === SETUP ===
 void setup() {
-  Serial.begin(9600);
-  pinMode(PIN_TRIG, OUTPUT);
-  pinMode(PIN_ECHO, INPUT);
-  servoRadar.attach(PIN_SERVO);
-  servoRadar.write(anguloActual);
-  Serial.println("=== RADAR INICIADO ===");
+  // Configurar pines como salida
+  pinMode(IN1, OUTPUT);
+  pinMode(IN2, OUTPUT);
+  pinMode(IN3, OUTPUT);
+  pinMode(IN4, OUTPUT);
+  pinMode(ENA, OUTPUT);
+  pinMode(ENB, OUTPUT);
+
+  // Activar motores a velocidad media
+  analogWrite(ENA, 180);  // velocidad motor A (0-255)
+  analogWrite(ENB, 180);  // velocidad motor B (0-255)
+
+  // Ambos motores hacia adelante
+  digitalWrite(IN1, HIGH);
+  digitalWrite(IN2, LOW);
+  digitalWrite(IN3, HIGH);
+  digitalWrite(IN4, LOW);
 }
 
-// === LOOP PRINCIPAL ===
 void loop() {
-  moverServo();    // barrido del servo sin delay
-  mostrarRadar();  // lectura periódica de distancia
+  // Avanzar 5 segundos
+  delay(5000);
+
+  // Parar motores
+  digitalWrite(IN1, LOW);
+  digitalWrite(IN2, LOW);
+  digitalWrite(IN3, LOW);
+  digitalWrite(IN4, LOW);
+  delay(2000);
+
+  // Volver a avanzar
+  digitalWrite(IN1, HIGH);
+  digitalWrite(IN2, LOW);
+  digitalWrite(IN3, HIGH);
+  digitalWrite(IN4, LOW);
+  delay(5000);
 }
- FUNCIONA BIEN DE MOMENTO

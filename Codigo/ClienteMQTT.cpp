@@ -1,31 +1,46 @@
-#include "ClienteMQTT.h"
+// Pines de control
+#define IN1 25
+#define IN2 26
+#define IN3 27
+#define IN4 14
+#define ENA 32
+#define ENB 33
 
-void ConfigurarClienteMQTT(); {
-  brokerMQTT.setServer(MQTT_BROKER, MQTT_PORT);
-  ReconectarMQTT();
+void setup() {
+  // Configurar pines como salida
+  pinMode(IN1, OUTPUT);
+  pinMode(IN2, OUTPUT);
+  pinMode(IN3, OUTPUT);
+  pinMode(IN4, OUTPUT);
+  pinMode(ENA, OUTPUT);
+  pinMode(ENB, OUTPUT);
+
+  // Activar motores a velocidad media
+  analogWrite(ENA, 180);  // velocidad motor A (0-255)
+  analogWrite(ENB, 180);  // velocidad motor B (0-255)
+
+  // Ambos motores hacia adelante
+  digitalWrite(IN1, HIGH);
+  digitalWrite(IN2, LOW);
+  digitalWrite(IN3, HIGH);
+  digitalWrite(IN4, LOW);
 }
 
-void ReconectarMQTT() {
-  while (!brokerMQTT.connected()) {
-    if (brokerMQTT.connect(MQTT_CLIENT_ID)) break;
-    brokerMQTT.loop();
-    yield();
-  }
-}
+void loop() {
+  // Avanzar 5 segundos
+  delay(5000);
 
-void ActualizarClienteMQTT() {
-  if (!brokerMQTT.connected()) ReconectarMQTT();
-  brokerMQTT.loop();
-}
+  // Parar motores
+  digitalWrite(IN1, LOW);
+  digitalWrite(IN2, LOW);
+  digitalWrite(IN3, LOW);
+  digitalWrite(IN4, LOW);
+  delay(2000);
 
-void EnviarMedicionMQTT() {
-  if (!brokerMQTT.connected() || distanciaCm < 0) return;
-
-  String payload = "{";
-  payload += "\"distancia\":" + String(distanciaCm);
-  payload += ",\"angulo\":" + String(anguloServo);
-  payload += ",\"ts\":" + String(millis());
-  payload += "}";
-
-  brokerMQTT.publish(MQTT_TOPIC_MEDICIONES, payload.c_str());
+  // Volver a avanzar
+  digitalWrite(IN1, HIGH);
+  digitalWrite(IN2, LOW);
+  digitalWrite(IN3, HIGH);
+  digitalWrite(IN4, LOW);
+  delay(5000);
 }
