@@ -1,8 +1,13 @@
-#pragma once
-#include "Config.h"
-#include "globals.h"
+#ifndef SERVIDORWEB_H
+#define SERVIDORWEB_H
 
-  void ConfigurarservidorWeb();
-  void ActualizarservidorWeb();
-  static String generarHTML();
+#include <Arduino.h>
+#include <WebServer.h>
 
+void ConfigurarServidorWeb();
+void ActualizarServidorWeb();
+void manejadorRaiz();
+String generarHTML();
+
+
+#endif

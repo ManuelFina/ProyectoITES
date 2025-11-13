@@ -1,75 +1,95 @@
 #include "SensorUltrasonico.h"
 #include "Config.h"
-
-#include "SensorUltrasonico.h"
-#include "Config.h"
 #include "CtrlServo.h"
-#include "ClienteMQTT.h"
+#include "Globals.h"
 
-float distanciaCm = 0;
-long pulsoMicrosegundos = 0;
-float anguloMedido = 0;
+// ==============================
+//  Variables internas del sensor
+// ==============================
+static volatile unsigned long pulsoMicrosegundos = 0;
+static volatile float  anguloMedido = 0.0f;
 
+// Estados internos del autómata del sensor ultrasónico
 enum EstadoUltrasonico {
-  US_INICIAR_TRIGGER,      
-  US_FINALIZAR_TRIGGER,    
-  US_ESPERAR_ECHO_ALTO,   
-  US_ESPERAR_ECHO_BAJO     
+  US_INICIAR_TRIGGER,
+  US_FINALIZAR_TRIGGER,
+  US_ESPERAR_ECHO_ALTO,
+  US_ESPERAR_ECHO_BAJO
 };
 
-EstadoUltrasonico estadoActual = US_INICIAR_TRIGGER;
+// Estado actual de la FSM
+static EstadoUltrasonico estadoActual = US_INICIAR_TRIGGER;
 
-unsigned long tiempoInicioTrigger = 0;
-unsigned long tiempoInicioEco =     0;
-unsigned long tiempoInicioEspera =  0;
+// Tiempos de referencia
+static unsigned long tiempoInicioTrigger = 0;
+static unsigned long tiempoInicioEco     = 0;
+static unsigned long tiempoInicioEspera  = 0;
 
+// ====================================================
+//  FUNCIÓN PRINCIPAL: Máquina de estados no bloqueante
+// ====================================================
 void MedicionUltrasonico() {
   unsigned long ahora = micros();
 
   switch (estadoActual) {
 
-    // 1) Subir TRIG (inicio del pulso)
     case US_INICIAR_TRIGGER:
-      digitalWrite(PIN_TRIG, HIGH);
+      // Inicia pulso de disparo (nivel alto)
+      TRIG_ES_ALTO;
       tiempoInicioTrigger = ahora;
       estadoActual = US_FINALIZAR_TRIGGER;
       break;
 
-    // 2) Bajar TRIG cuando pasen 10 μs
     case US_FINALIZAR_TRIGGER:
+      // Pulso de 10 microsegundos en TRIG
       if (ahora - tiempoInicioTrigger >= 10) {
-        digitalWrite(PIN_TRIG, LOW);
+        TRIG_ES_BAJO;
         tiempoInicioEspera = ahora;
         estadoActual = US_ESPERAR_ECHO_ALTO;
       }
       break;
 
-    // 3) Esperar que ECHO suba (eco recibido)
     case US_ESPERAR_ECHO_ALTO:
-      if (digitalRead(PIN_ECHO) == HIGH) {
+      // Espera el inicio del eco (flanco ascendente)
+      if (ECHO_ES_ALTO) {
         tiempoInicioEco = ahora;
         estadoActual = US_ESPERAR_ECHO_BAJO;
-      }
-
-      // timeout sin eco
-      if (ahora - tiempoInicioEspera > 30000) {
-        distanciaCm = -1;
+      } 
+      // Timeout de 30 ms si no hay eco
+      else if (ahora - tiempoInicioEspera > 30000) { 
+        distanciaCm = -1; // sin lectura válida
         estadoActual = US_INICIAR_TRIGGER;
       }
       break;
 
-    // 4) Esperar que ECHO baje (eco termina)
     case US_ESPERAR_ECHO_BAJO:
-      if (digitalRead(PIN_ECHO) == LOW) {
-        pulsoMicrosegundos = ahora - tiempoInicioEco;
-        distanciaCm = pulsoMicrosegundos * 0.0343 / 2;
-        anguloMedido = ObtenerAnguloServo();
-
-        EnviarMedicionMQTT();
-
+      // Cuando el pin ECHO baja, se termina el pulso
+      if (ECHO_ES_BAJO) {
+        long pulso = ahora - tiempoInicioEco;
+        distanciaCm = pulso * 0.0343f / 2.0f;  // cálculo en cm
+        // pulsoMicrosegundos puede guardarse si se necesita
+        pulsoMicrosegundos = pulso;
+        // Vuelve al estado inicial para la próxima medición
         estadoActual = US_INICIAR_TRIGGER;
       }
       break;
   }
 }
 
+// ==================================
+//  Envolturas públicas del módulo
+// ==================================
+void ProcesarSensorUltrasonico() {
+  // Llamar periódicamente desde loop()
+  MedicionUltrasonico();
+}
+
+long DistanciaSensorUltrasonico() {
+  // Devuelve la última distancia medida (o -1 si falló)
+  return distanciaCm;
+}
+
+unsigned long ObtenerPulsoUltrasonicoUS() {
+  // Devuelve la duración del último pulso en microsegundos
+  return pulsoMicrosegundos;
+}

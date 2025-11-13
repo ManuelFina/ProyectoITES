@@ -1,9 +1,10 @@
 #include "CtrlServo.h"
-#include <Servo.h>
+#include "Globals.h"       // trae extern Servo servoBarrido; extern int anguloActual;
+#include <ESP32Servo.h>
 
-Servo servoBarrido;
+// NO declarar aquí: Servo servoBarrido;
+// NO declarar aquí: int   anguloActual;
 
-int anguloActual = 0;
 int direccionPaso = 1;
 unsigned long tiempoPrevioMovimiento = 0;
 const unsigned intervaloMovimiento = 20;

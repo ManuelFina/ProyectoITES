@@ -1,15 +1,23 @@
-#pragma once
-#include "Config.h"
+#ifndef GLOBALS_H
+#define GLOBALS_H
 
+#include <WiFi.h>
+#include <WebServer.h>
+#include <PubSubClient.h>
+#include <ESP32Servo.h>
+
+// ---- Tipos compartidos ----
+enum Movimiento { PARADO, ADELANTE, ATRAS, IZQ, DER };
+
+// ---- Objetos/vars globales (solo declaración) ----
 extern WiFiClient   clienteWiFi;
 extern PubSubClient brokerMQTT;
 extern WebServer    servidorHTTP;
 
-extern int           velocidadBase;
-extern int           anguloServo;
-extern int           direccionServo;
-extern unsigned long ultimoMovimientoServo;
-extern long          distanciaCm;
-extern volatile Movimiento  movimientoActual;
 
+extern Servo        servoBarrido;  // ← declaración visible globalmente
+extern long         distanciaCm;
+extern int          anguloActual;
+extern volatile Movimiento movimientoActual;
 
+#endif

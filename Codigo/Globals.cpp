@@ -1,18 +1,15 @@
-#include "globals.h"
+#include "Globals.h"
+#include <WiFi.h>
+#include <WebServer.h>
+#include <PubSubClient.h>
+#include <ESP32Servo.h>
 
-#include "CtrlRuedas.h"
-#include "CtrlServo.h"
-#include "SensorUltrasonico.h"
-#include "ClienteMQTT.h"
-#include "ConexionWiFi.h"
-#include "ServidorWeb.h"
+#include "Globals.h"
 
 WiFiClient   clienteWiFi;
 PubSubClient brokerMQTT(clienteWiFi);
 WebServer    servidorHTTP(80);
-
-int           anguloServo = 90;
-int           direccionServo = 1;
-unsigned long ultimoMovimientoServo = 0;
-long          distanciaCm = -1;
-volatile Movimiento  movimientoActual = PARADO;
+Servo servoBarrido;
+long         distanciaCm = -1;
+int          anguloActual = 90;
+volatile Movimiento movimientoActual = PARADO;

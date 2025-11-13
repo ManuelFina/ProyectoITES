@@ -1,13 +1,6 @@
-#ifndef SENSOR_ULTRASONICO_H
-#define SENSOR_ULTRASONICO_H
+#pragma once
 
-#include "Config.h"
-#include "globals.h"
-
-extern float distanciaCm;
-extern long pulsoMicrosegundos;
-extern float anguloMedido;
-
-void MedicionUltrasonico();
-
-#endif
+// SOLO las firmas. No incluyas aquí otros headers para evitar ciclos.
+void ProcesarSensorUltrasonico();
+long DistanciaSensorUltrasonico();
+unsigned long ObtenerPulsoUltrasonicoUS();

@@ -3,3 +3,4 @@
 #include "globals.h"
 
   void MovimientoServo();
+  int ObtenerAnguloServo();
