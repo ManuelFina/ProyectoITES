@@ -1,4 +1,4 @@
-#include <Arduino.h>      // <-- Necesario para Serial, millis, etc.
+#include <Arduino.h>    
 #include <WiFi.h>
 #include "Config.h"
 #include "ConexionWiFi.h"
@@ -7,8 +7,6 @@ void ConectarWiFi() {
   Serial.begin(115200);
 
   WiFi.mode(WIFI_STA);
-  // Si usás IP estática: descomentá estas líneas y definí en Config.h
-  // WiFi.config(WIFI_LOCAL_IP, WIFI_GATEWAY, WIFI_SUBNET, WIFI_DNS1, WIFI_DNS2);
 
   WiFi.begin(WIFI_SSID, WIFI_PASS);
 

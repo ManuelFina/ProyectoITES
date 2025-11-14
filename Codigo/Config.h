@@ -5,7 +5,7 @@
 #include <WiFi.h>
 #include <WebServer.h>
 #include <PubSubClient.h>
-#include <ESP32Servo.h>  // Servo en ESP32
+#include <ESP32Servo.h>  
 
 #define WIFI_SSID   "Tanque-123"
 #define WIFI_PASS   "tanque12345"
@@ -38,7 +38,6 @@
 #define DETENER_MOTORES {digitalWrite(PIN_MOTOR1_A, LOW);  digitalWrite(PIN_MOTOR1_B, LOW);  digitalWrite(PIN_MOTOR2_A, LOW);  digitalWrite(PIN_MOTOR2_B, LOW);}
 
 #define PIN_SERVO      23
-// requiere: Servo miServo; int angulo;
 #define CONFIG_SERVO   {servoBarrido.attach(PIN_SERVO); servoBarrido.write(anguloActual);}
 
 #define PIN_TRIG       12

@@ -3,9 +3,9 @@
 #include "Config.h"
 
 static unsigned long proximoReintentoMQTT = 0;
-static const unsigned long INTERVALO_REINTENTO_MQTT = 2000; // 2s
+static const unsigned long INTERVALO_REINTENTO_MQTT = 2000;
 static unsigned long ultimoPublish = 0;
-static const unsigned long INTERVALO_PUBLISH_MS = 250; // evita flood
+static const unsigned long INTERVALO_PUBLISH_MS = 250; 
 
 void ConfigurarClienteMQTT() {
   brokerMQTT.setServer(MQTT_BROKER, MQTT_PORT);
@@ -18,7 +18,7 @@ void ReconectarMQTT() {
   if (ahora < proximoReintentoMQTT) return;
 
   proximoReintentoMQTT = ahora + INTERVALO_REINTENTO_MQTT;
-  brokerMQTT.connect(MQTT_CLIENT_ID); // 1 intento y salimos
+  brokerMQTT.connect(MQTT_CLIENT_ID);
 }
 
 void ActualizarClienteMQTT() {
@@ -33,7 +33,6 @@ void EnviarMedicionMQTT() {
   if (ahora - ultimoPublish < INTERVALO_PUBLISH_MS) return;
   ultimoPublish = ahora;
 
-  // Usa las variables globales calculadas por el sensor/servo
   String payload = "{";
   payload += "\"device_id\":\"" + String(MQTT_CLIENT_ID) + "\"";
   payload += ",\"distance_cm\":" + String(distanciaCm, 2);

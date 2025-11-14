@@ -3,10 +3,8 @@
 #include "CtrlRuedas.h"
 #include <Arduino.h>
 void ConfigurarServidorWeb() {
-  // Raíz
   servidorHTTP.on("/", manejadorRaiz);
 
-  // Controles
   servidorHTTP.on("/adelante", [](){
     movimientoActual = ADELANTE;
     servidorHTTP.send(200, "text/plain", "OK");
@@ -28,7 +26,6 @@ void ConfigurarServidorWeb() {
     servidorHTTP.send(200, "text/plain", "OK");
   });
 
-  // Diagnóstico rápido
   servidorHTTP.on("/ping", [](){
     servidorHTTP.send(200, "text/plain", "pong");
   });
@@ -36,11 +33,9 @@ void ConfigurarServidorWeb() {
   servidorHTTP.begin();
   Serial.println("[HTTP] Servidor iniciado");
 
-  // NUEVO: Telemetría para el radar (lo consulta el JS cada ~150 ms)
   servidorHTTP.on("/telemetria", [](){
-    // si no mediste aún, podés devolver -1 para dist
-    long d = distanciaCm; 
-    int  a = anguloActual;
+    long distancia = distanciaCm; 
+    int  angulo = anguloActual;
     char json[64];
     snprintf(json, sizeof(json), "{\"ang\":%d,\"dist\":%ld}", a, d);
     servidorHTTP.send(200, "application/json", json);
