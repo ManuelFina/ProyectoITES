@@ -214,7 +214,10 @@ Este proyecto está bajo la Licencia MIT. Ver archivo `LICENSE` para más detall
 
 ## 👥 Autores
 
-- **Tu Nombre** - *Desarrollo principal* - [GitHub](https://github.com/tu-usuario)
+- Manuel Fina - *Desarrollo principal*
+- Leonardo Renzi - *Colaborar y testing*
+- Enzo Cura Sotelo - *Hardware*
+- Agustin Ehyeramonho - *Documentacion*
 
 ## 🙏 Agradecimientos
 
@@ -225,7 +228,7 @@ Este proyecto está bajo la Licencia MIT. Ver archivo `LICENSE` para más detall
 ## 📧 Contacto
 
 Para preguntas, sugerencias o reportes de bugs:
-- Email: tu-email@ejemplo.com
+- Email: finamanuelmateo@gmail.com
 - Issues: [GitHub Issues](https://github.com/tu-usuario/tanque-esp32/issues)
 
 ---
