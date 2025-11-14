@@ -5,11 +5,10 @@
 void MovimientoTanque() {
   const long distanciaActual = distanciaCm;
 
-  if (distanciaActual >= 0 && distanciaActual < DISTANCIA_MINIMA) {
-    DETENER_MOTORES;
-    movimientoActual = PARADO;
-    return;
-  }
+  if (distanciaActual >= DISTANCIA_MINIMA) return;
+  movimientoActual = PARADO;
+  return;
+
 
   switch (movimientoActual) {
     case ADELANTE:    AVANZAR;         break;
