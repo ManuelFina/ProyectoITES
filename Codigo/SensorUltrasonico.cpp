@@ -38,13 +38,12 @@ void MedicionUltrasonico() {
       break;
 
     case US_ESPERAR_ECHO_ALTO:
-      if (!ECHO_ES_ALTO) {
+      if (ECHO_ES_ALTO) return; 
         if (ahora - tiempoInicioEspera > 30000) { 
           distanciaCm   = -1;              
           estadoActual  = US_INICIAR_TRIGGER;
         }
-        return;
-      }
+
       tiempoInicioEco = ahora;
       estadoActual    = US_ESPERAR_ECHO_BAJO;
       break;

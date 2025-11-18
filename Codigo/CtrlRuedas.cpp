@@ -7,8 +7,6 @@ void MovimientoTanque() {
 
   if (distanciaActual >= DISTANCIA_MINIMA) return;
   movimientoActual = PARADO;
-  return;
-
 
   switch (movimientoActual) {
     case ADELANTE:    AVANZAR;         break;

@@ -32,14 +32,6 @@ void ConfigurarServidorWeb() {
 
   servidorHTTP.begin();
   Serial.println("[HTTP] Servidor iniciado");
-
-  servidorHTTP.on("/telemetria", [](){
-    long distancia = distanciaCm; 
-    int  angulo = anguloActual;
-    char json[64];
-    snprintf(json, sizeof(json), "{\"ang\":%d,\"dist\":%ld}", a, d);
-    servidorHTTP.send(200, "application/json", json);
-  });
 }
 
 void ActualizarServidorWeb() {

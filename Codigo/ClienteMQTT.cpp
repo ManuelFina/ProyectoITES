@@ -3,27 +3,28 @@
 #include "Config.h"
 
 static unsigned long proximoReintentoMQTT = 0;
-static const unsigned long INTERVALO_REINTENTO_MQTT = 2000;
+static const unsigned long INTERVALO_REINTENTO_MQTT = 2000;   // 2s entre reintentos
 static unsigned long ultimoPublish = 0;
-static const unsigned long INTERVALO_PUBLISH_MS = 250; 
+static const unsigned long INTERVALO_PUBLISH_MS = 250;        
 
 void ConfigurarClienteMQTT() {
   brokerMQTT.setServer(MQTT_BROKER, MQTT_PORT);
-  brokerMQTT.setCallback(CallbackMQTT);
 }
 
 void ReconectarMQTT() {
   if (brokerMQTT.connected()) return;
+
   unsigned long ahora = millis();
   if (ahora < proximoReintentoMQTT) return;
 
   proximoReintentoMQTT = ahora + INTERVALO_REINTENTO_MQTT;
+
   brokerMQTT.connect(MQTT_CLIENT_ID);
 }
 
 void ActualizarClienteMQTT() {
   ReconectarMQTT();
-  if (brokerMQTT.connected()) brokerMQTT.loop();
+  if (brokerMQTT.connected()) brokerMQTT.loop();    
 }
 
 void EnviarMedicionMQTT() {
