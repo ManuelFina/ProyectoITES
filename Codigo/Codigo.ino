@@ -297,7 +297,7 @@ void setup() {
 void loop() {
   ActualizarServidorWeb();
   ActualizarClienteMQTT();
-  ReconectarWiFi()
+  ReconectarWiFi();
 
   MedicionUltrasonico();
   MovimientoTanque();
