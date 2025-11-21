@@ -190,12 +190,11 @@ void MedicionUltrasonico() {
     case US_ESPERAR_ECHO_BAJO:
       if (!ECHO_ES_BAJO) break;
 
-      {
         unsigned long pulso = ahora - tiempoInicioEco;
         pulsoMicrosegundos  = pulso;
         distanciaCm         = pulso * 0.0343f / 2.0f;
         estadoUS            = US_INICIAR_TRIGGER;
-      }
+      
       break;
   }
 }
